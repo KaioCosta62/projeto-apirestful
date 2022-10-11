@@ -1,0 +1,7 @@
+A partir de agora não vamos acessar o servidor pelo navegador, mas sim por um client http, no caso, o postman
+
+Usando a forma de api restful, não precisamos definir nossa rota de erro, pois vamos ter rotas específicas do servidor, não precisamos mais do ejs, pois vamos apenas servir dados e não precisamos definir os arquivos públicos, pois nosso servidor vai apenas retornar json's
+
+Uma collection é um conjunto de endpoits de um a api
+
+Na nossa collection, conseguimos criar várias requests
