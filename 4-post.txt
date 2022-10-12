@@ -1,0 +1,25 @@
+O Post vai receber os dados e cadastrar
+
+Agora o post não vem mais de um formulário, vem do corpo da requisição
+
+1 passo é receber os dados
+
+ const {
+    name,
+    brand,
+    price
+} = req.body
+
+2 passo é inserir os itens no scheema
+
+const products = new ProductsModel({
+    name,
+    brand,
+    price
+})
+
+3 passo é salvar os dados no banco de dados
+
+products.save()
+
+Com api restfull, não precisamos mais receber os dados diretamente do formulário, vamos receber dados no corpo da requisição, o front end vai mandar os dados por fetch, logo aquela configuração de : app.use(express.urlenconded: {extended: true}) não é mais necessária, pois o servidor vai apenas receber um json, logo precisamos fazer outra configuração de middleware: app.use(express.json()), pra habilitar o servidor a receber json

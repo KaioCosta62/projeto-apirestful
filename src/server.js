@@ -1,6 +1,4 @@
 const express = require('express')
-const path = require('path')
-
 const db = require('./database/db')
 const routes = require('./routes/routes')
 
@@ -10,8 +8,8 @@ const app = express()
 //conexão com o banco de dados
 db.connect()
 
-//Habilita o server para receber dados via post(formulario)
-app.use(express.urlencoded({extended: true}))
+//Habilita o server para receber dados json
+app.use(express.json())
 
 //definindo as rotas
 app.use('/api', routes)
