@@ -1,0 +1,26 @@
+O id no nosso endpoint é obrigatório, pois precisamos dele pra identificar o produto no nosso banco de dados
+
+Pegamos o id pelo req.params
+
+ const {id} = req.params
+
+Agora basta procurar esse id no db
+
+const products = await ProductsModel.findById({_id: id})
+
+Para atualizar, basta usar o: await ProductsModel.updateOne(req.body)
+
+Todos os dados atualizados de req.body, irão para o banco.
+
+Só que, se quisermos mandar esse produto atualizado para o front, não seria possível, pois ele só altera no banco de dados, para fazer tal coisa, podemos seguir outro caminho:
+
+const product = await ProductsModel.findByIdAndUpdate({_id: id}, req.body,{new: true}
+
+O método findByIdAndUpdate recebe 3 parâmetros: O id, os itens atualizados e se é para exibir o novo objeto atualizado, nesse caso sim.
+
+Agora basta mandar product como resposta:
+
+ res.send({
+    message: "Produto atualizado com sucesso",
+    product
+})

@@ -27,7 +27,27 @@ async function post(req, res){
   })
 }
 
+async function put(req, res){
+  const {id} = req.params
+
+  // Atualiza os itens mas não os retorna na resposta
+  /*
+  const products = await ProductsModel.findById({_id: id})
+  await ProductsModel.updateOne(req.body)
+  */
+
+  // Atualiza os itens e retorna na resposta
+  const product = await ProductsModel.findByIdAndUpdate({_id: id}, req.body,{new: true})
+
+  console.log(product)
+  res.send({
+    message: "Produto atualizado com sucesso",
+    product
+  })
+}
+
 module.exports = {
   get,
-  post
+  post,
+  put
 }
