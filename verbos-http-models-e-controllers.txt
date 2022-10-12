@@ -1,0 +1,8 @@
+verbos http são:
+
+get(obter dados)
+post(enviar ou receber dados)
+put(atualizar dados)
+delete(deletar dados)
+
+Cada um corresponde a uma alteração do crud
