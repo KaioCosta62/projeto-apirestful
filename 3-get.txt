@@ -1,0 +1,28 @@
+A lógica é que, o usuário possa listar apenas um produto ou todos os produtos, para isso, meu endpoint get vai ter que receber um id
+
+router.get('/products/:id', ProductsController.get)
+
+Só que, o id, é opcional, pois o usuário pode querer listar todos os produtos, então apos a palavra id, a gente passa o ?, que significa opcional
+
+Vamos receber o id no nosso controller, através do params
+
+const id = req.params
+
+No nosso controller, vamos fazer a busca pelos produtos no db
+
+const products = await ProductsModel.find()
+
+Usamos o find, pois podemos ou não receber um id no nosso endpoint, então se não recebemos, vamos listar todos os produtos para o usuário
+
+Vamos listar o nosso id para ser o valor da propriedade _id do db
+
+const products = await ProductsModel.find({_id: id})
+
+Só que nisso, temos um problema: O find ta passando pra _id o valor de id, então, se não passarmos um valor de id no endpoint, isso vai nos retornar um array vazio. Para resolver isso, vamos fazer uma condição antes:
+
+const obj = id ? {_id: id} : null
+
+Se houver um valor válido de id, vamos criar um objeto passando pra _id esse valor, caso contrário a constante obj vai ser nulo, logo vai ser listados todos os dados vindo do db
+
+const obj = id ? {_id: id} : null
+const products = await ProductsModel.find(obj)
