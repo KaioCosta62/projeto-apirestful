@@ -1,0 +1,17 @@
+Pegamos o id do elemento que vai ser deletado através do req.params
+
+Usamos o método deleteOne, passando como parâmetro um objeto contendo o id a ser deletado
+
+ const remove = await ProductsModel.deleteOne({_id: id})
+
+Após isso exibimos um feedback
+
+const message = remove.deletedCount ? "sucess" : "error"
+
+Se deletedCount for 1 vai exibir a mensagem de sucess, caso contrario, error
+
+ res.send({
+    message
+  })
+
+Após isso envio message como resposta a request feita

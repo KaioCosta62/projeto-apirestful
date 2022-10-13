@@ -15,6 +15,5 @@ app.use(express.json())
 app.use('/api', routes)
 
 //Iniciando o servidor
-
 const port = process.env.PORT || 5500
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))
