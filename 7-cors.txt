@@ -1,0 +1,60 @@
+Cross Origin Resource Sharing
+
+Quando iniciamos nossa aplicação, ela vai rodar em um endereço e porta em nosso ip, no caso: http://localhost:8080
+
+LocalHost é como se fosse o domínio do nosso sistema
+
+Quando uma pessoa tentar fazer uma requisição na nossa api, vamos ter problema de cors, pois precisamos configurar nossa api para permitir que outros domínios façam requisições para ela
+
+O nosso front-end que vai consumir essa api, pode ser que ele esteja em outro local, então precisamos configurar nossa api pra permitir que nosso front-end consiga acessa-la
+
+Para isso, precisamos instalar no nosso server a biblioteca cors, e configurar um middleware.
+
+Instalando a biblioteca:
+npm i cors
+
+
+Configurando o middleware:
+app.use(cors()) - Dessa maneira nossa api fica pública, qualquer um pode consultar
+
+Podemos configurar o cors para permitir qualquer endereço acesse nossa api(api's públicas) ou podemos restringir a determinados endereços
+
+Por padrão as requisições no fetch() são do tipo get, mas podemos configurar isso, pois o fetch aceita como 2 parâmetro um objeto, onde podemos configurar o tipo da requisição dentre outras coisas
+
+Para limitar o cors para um endereço específico, fazemos assim:
+
+app.use(cors({
+  origin: 'http://127.0.0.1:5500'
+}))
+
+Caso queremos que +1 endereço seja habilitado, fazemos da seguinte forma:
+
+Primeiro criamos um array que vai receber os endereços
+
+const allowedOrigins = [
+  'http://127.0.0.1:550',
+  'http://www.siteteste.com.br'
+]
+
+app.use(cors({
+  origin: function(origin, callback) {
+    let allowed = true
+
+    // app mobile
+    if(!origin) allowed = true
+
+    if(!allowedOrigins.includes(origin)) allowed = false
+    
+    callback(null, allowed)
+  }
+}))
+
+Origin vira uma função, que vai verificar o endereço que está tentando fazer conexão com a api, temos 2 parâmetros: origin(endereço) e um método callback
+
+Setamos uma variávelde controle chamada allowed, que começa como true
+
+Se um app mobile está tentando fazer conexão com a api, ele não tem uma origin, então setamos que allowed continua como true
+
+Agora, caso o servidor que está tentando fazer conexão, não esteja presente no nosso array, a conexão vai ser barrada, logo allowed se torna false
+
+O callback recebe 2 parâmetros: Uma mensagem de feedback e se a conexão vai ou não ser aceita.
